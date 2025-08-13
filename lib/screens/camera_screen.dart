@@ -16,30 +16,22 @@ class _CameraScreenState extends State<CameraScreen> {
   final picker = ImagePicker();
   bool _loading = false;
 
-  
   final ClassifierService _classifier = ClassifierService();
 
-  
   String? _selectedClass;
-  double _confidence = 0.0;
-  double? _predictionTime;
-  Map<String, double>? _probabilities;
 
   @override
   void initState() {
     super.initState();
     _checkPermissions();
 
-    
     _classifier.loadModel().then((_) {
-      
       debugPrint("Model TFLite berhasil dimuat dari CameraScreen.");
     });
   }
 
   @override
   void dispose() {
-    
     _classifier.close();
     super.dispose();
   }
@@ -110,25 +102,17 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  
   Future<void> _runClassification() async {
     if (_image == null) return;
 
     setState(() => _loading = true);
 
     try {
-      
       final result = await _classifier.predict(_image!);
 
-      
       setState(() {
         _selectedClass = result['predictedClass'];
-        _confidence = result['confidence'];
-        _predictionTime = result['predictionTime'];
-        _probabilities = result['probabilities'];
       });
-
-      
     } catch (e) {
       debugPrint("Error saat klasifikasi: $e");
       if (mounted) {
@@ -159,13 +143,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
       setState(() {
         _image = File(pickedFile.path);
-        _selectedClass = null; 
-        _confidence = 0.0;
-        _predictionTime = null;
-        _probabilities = null;
+        _selectedClass = null;
       });
 
-      
       await _runClassification();
     } catch (e) {
       debugPrint("Error mengambil foto: $e");
@@ -195,13 +175,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
       setState(() {
         _image = File(pickedFile.path);
-        _selectedClass = null; 
-        _confidence = 0.0;
-        _predictionTime = null;
-        _probabilities = null;
+        _selectedClass = null;
       });
 
-      
       await _runClassification();
     } catch (e) {
       debugPrint("Error memilih gambar: $e");
@@ -279,7 +255,6 @@ class _CameraScreenState extends State<CameraScreen> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
@@ -317,8 +292,8 @@ class _CameraScreenState extends State<CameraScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: isSelected
-                ? Border.all(color: Colors.brown[700]!, width: 2)
-                : null,
+                ? Border.all(color: Colors.green, width: 3)
+                : Border.all(color: Colors.transparent, width: 3),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -328,7 +303,7 @@ class _CameraScreenState extends State<CameraScreen> {
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(isSelected ? 8 : 10),
+            borderRadius: BorderRadius.circular(isSelected ? 7 : 10),
             child: Image.asset(
               imagePath,
               fit: BoxFit.cover,
@@ -341,70 +316,10 @@ class _CameraScreenState extends State<CameraScreen> {
           style: TextStyle(
             fontSize: 12,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-            color: isSelected ? Colors.brown[800] : Colors.brown[700],
+            color: isSelected ? Colors.green : Colors.brown[700],
           ),
         ),
       ],
-    );
-  }
-
-  
-  Widget _buildProbabilityBar(String label, double probability) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.brown[700],
-                ),
-              ),
-              Text(
-                '${(probability * 100).toStringAsFixed(1)}%',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.brown[800],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Stack(
-            children: [
-              Container(
-                height: 6,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.brown.shade100,
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              ),
-              FractionallySizedBox(
-                widthFactor: probability,
-                child: Container(
-                  height: 6,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.brown.shade400, Colors.brown.shade700],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 
@@ -654,63 +569,14 @@ class _CameraScreenState extends State<CameraScreen> {
                                 color: Colors.white.withOpacity(0.9),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    _selectedClass ?? "Belum Terdeteksi",
-                                    style: TextStyle(
-                                      color: Colors.brown[800],
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  if (_selectedClass != null) ...[
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 4),
-                                      child: Text(
-                                        "Akurasi: ${(_confidence * 100).toStringAsFixed(1)}%",
-                                        style: TextStyle(
-                                          color: Colors.brown[600],
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                    ),
-                                    if (_predictionTime != null)
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 2),
-                                        child: Text(
-                                          "Waktu: ${_predictionTime!.toStringAsFixed(2)} detik",
-                                          style: TextStyle(
-                                            color: Colors.brown[600],
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-
-                                  
-                                  if (_probabilities != null &&
-                                      _probabilities!.isNotEmpty) ...[
-                                    const SizedBox(height: 16),
-                                    const Divider(
-                                        height: 1, color: Colors.brown),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      "Probabilitas Setiap Kelas",
-                                      style: TextStyle(
-                                        color: Colors.brown[700],
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    ..._probabilities!.entries
-                                        .map((entry) => _buildProbabilityBar(
-                                            entry.key, entry.value))
-                                        .toList(),
-                                  ],
-                                ],
+                              child: Text(
+                                _selectedClass ?? "Belum Terdeteksi",
+                                style: TextStyle(
+                                  color: Colors.brown[800],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ],

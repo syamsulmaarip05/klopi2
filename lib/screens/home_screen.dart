@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../models/menu_item.dart';
 import 'camera_screen.dart';
 import 'coffee_info_screen.dart';
-import 'settings_screen.dart';
 import 'about_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,11 +12,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // List menu items
   static final List<MenuItem> menuItems = [
     const MenuItem("Deteksi Kamera", Icons.camera_alt),
     const MenuItem("Info Kopi", Icons.coffee_outlined),
-    const MenuItem("Pengaturan", Icons.settings),
     const MenuItem("Tentang Aplikasi", Icons.info_outline),
   ];
 
@@ -34,13 +31,16 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header
                 Row(
                   children: [
-                    Icon(Icons.coffee, size: 48, color: Colors.brown[700]),
+                    Image.asset(
+                      'assets/images/icon.png',
+                      width: 48,
+                      height: 48,
+                    ),
                     const SizedBox(width: 12),
                     Text(
-                      "KOPI",
+                      "DetectCoffee",
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -49,11 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-
-                // Welcome card
+                const SizedBox(height: 25),
                 Container(
                   width: double.infinity,
+                  height: (150.0),
                   padding: const EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -67,24 +66,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text(
-                        "Selamat Datang!",
+                        "Selamat Datang di DetectCoffee!",
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 6),
                       Text(
-                        "Deteksi dan profiling kualitas biji kopi dengan mudah.",
+                        "Deteksi jenis profiling biji kopi dengan mudah.",
                         style: TextStyle(fontSize: 15, color: Colors.white70),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // Menu grid
                 GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -100,8 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 const SizedBox(height: 28),
-
-                // Action button
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
@@ -188,9 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
         screen = const CoffeeInfoScreen();
         break;
       case 2:
-        screen = const SettingsScreen();
-        break;
-      case 3:
         screen = const AboutScreen();
         break;
       default:
@@ -199,5 +191,4 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
-
 }
