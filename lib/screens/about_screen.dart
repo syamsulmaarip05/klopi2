@@ -60,15 +60,15 @@ class AboutScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Icon(
-                        Icons.coffee,
-                        size: 40,
-                        color: Colors.brown[800],
+                      
+                      child: Image.asset(
+                        'assets/images/icon.png',
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'Coffee Bean Detector',
+                      'DetectCoffee',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class AboutScreen extends StatelessWidget {
                     _buildSectionTitle('Tentang Aplikasi'),
                     const SizedBox(height: 12),
                     _buildSectionContent(
-                      'Coffee Bean Detector adalah aplikasi mobile berbasis AI yang dapat mengidentifikasi dan mengklasifikasikan jenis biji kopi menggunakan teknologi deep learning. Aplikasi ini menggunakan model Convolutional Neural Network (CNN) berbasis EfficientNet yang telah dikonversi ke TensorFlow Lite untuk inference yang cepat dan efisien pada perangkat mobile.',
+                      'DetectCoffee adalah aplikasi mobile berbasis AI yang dapat mengidentifikasi dan mengklasifikasikan jenis biji kopi menggunakan teknologi deep learning. Aplikasi ini menggunakan model Convolutional Neural Network (CNN) berbasis EfficientNet yang telah dikonversi ke TensorFlow Lite untuk inference yang cepat dan efisien pada perangkat mobile.',
                     ),
 
                     const SizedBox(height: 24),
@@ -160,7 +160,7 @@ class AboutScreen extends StatelessWidget {
                     // Cara Penggunaan
                     _buildSectionTitle('Cara Penggunaan'),
                     const SizedBox(height: 12),
-                    _buildStepItem(1, 'Buka aplikasi Coffee Bean Detector'),
+                    _buildStepItem(1, 'Buka aplikasi DetectCoffee'),
                     _buildStepItem(2, 'Pilih menu "Deteksi Kopi"'),
                     _buildStepItem(3, 'Tekan tombol "Ambil Foto Kopi"'),
                     _buildStepItem(
@@ -204,7 +204,7 @@ class AboutScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          '© 2024 Coffee Bean Detector\nAll Rights Reserved',
+                          '© 2025 DetectCoffee | All Rights Reserved',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.brown[600],
@@ -222,51 +222,6 @@ class AboutScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildCoffeeTypeItem(String type, String description) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 8,
-            height: 8,
-            margin: const EdgeInsets.only(top: 6),
-            decoration: BoxDecoration(
-              color: Colors.brown[600],
-              shape: BoxShape.circle,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  type,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown[800],
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.brown[600],
-                    height: 1.3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
