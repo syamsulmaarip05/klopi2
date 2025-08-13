@@ -11,7 +11,7 @@ class KlopiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'KLOPI - Coffee Bean Quality Detection',
+      title: 'KLOPI - Klasifikasi Deteksi Kopi',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.brown,

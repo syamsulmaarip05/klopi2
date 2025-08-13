@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../models/menu_item.dart';
 import 'camera_screen.dart';
 import 'coffee_info_screen.dart';
-import 'csv_detection_screen.dart';
-import 'history_screen.dart';
 import 'settings_screen.dart';
 import 'about_screen.dart';
 
@@ -19,8 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   static final List<MenuItem> menuItems = [
     const MenuItem("Deteksi Kamera", Icons.camera_alt),
     const MenuItem("Info Kopi", Icons.coffee_outlined),
-    const MenuItem("Deteksi CSV", Icons.upload_file),
-    const MenuItem("Riwayat", Icons.history),
     const MenuItem("Pengaturan", Icons.settings),
     const MenuItem("Tentang Aplikasi", Icons.info_outline),
   ];
@@ -192,15 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
         screen = const CoffeeInfoScreen();
         break;
       case 2:
-        screen = const CsvDetectionScreen();
-        break;
-      case 3:
-        screen = const HistoryScreen();
-        break;
-      case 4:
         screen = const SettingsScreen();
         break;
-      case 5:
+      case 3:
         screen = const AboutScreen();
         break;
       default:

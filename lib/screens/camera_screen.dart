@@ -16,10 +16,10 @@ class _CameraScreenState extends State<CameraScreen> {
   final picker = ImagePicker();
   bool _loading = false;
 
-  // Instance dari ClassifierService untuk model TFLite
+  
   final ClassifierService _classifier = ClassifierService();
 
-  // Variabel untuk hasil prediksi
+  
   String? _selectedClass;
   double _confidence = 0.0;
   double? _predictionTime;
@@ -30,16 +30,16 @@ class _CameraScreenState extends State<CameraScreen> {
     super.initState();
     _checkPermissions();
 
-    // Muat model saat halaman pertama kali dibuka
+    
     _classifier.loadModel().then((_) {
-      // Update UI jika perlu setelah model dimuat
+      
       debugPrint("Model TFLite berhasil dimuat dari CameraScreen.");
     });
   }
 
   @override
   void dispose() {
-    // Pastikan untuk menutup interpreter saat halaman ditutup
+    
     _classifier.close();
     super.dispose();
   }
@@ -110,17 +110,17 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  // Fungsi untuk menjalankan klasifikasi gambar
+  
   Future<void> _runClassification() async {
     if (_image == null) return;
 
     setState(() => _loading = true);
 
     try {
-      // Panggil fungsi predict dari service
+      
       final result = await _classifier.predict(_image!);
 
-      // Update UI dengan hasil prediksi asli
+      
       setState(() {
         _selectedClass = result['predictedClass'];
         _confidence = result['confidence'];
@@ -128,7 +128,7 @@ class _CameraScreenState extends State<CameraScreen> {
         _probabilities = result['probabilities'];
       });
 
-      // Simpan hasil ke history jika prediksi berhasil
+      
     } catch (e) {
       debugPrint("Error saat klasifikasi: $e");
       if (mounted) {
@@ -159,13 +159,13 @@ class _CameraScreenState extends State<CameraScreen> {
 
       setState(() {
         _image = File(pickedFile.path);
-        _selectedClass = null; // Reset hasil sebelumnya
+        _selectedClass = null; 
         _confidence = 0.0;
         _predictionTime = null;
         _probabilities = null;
       });
 
-      // Jalankan klasifikasi dengan model ML
+      
       await _runClassification();
     } catch (e) {
       debugPrint("Error mengambil foto: $e");
@@ -195,13 +195,13 @@ class _CameraScreenState extends State<CameraScreen> {
 
       setState(() {
         _image = File(pickedFile.path);
-        _selectedClass = null; // Reset hasil sebelumnya
+        _selectedClass = null; 
         _confidence = 0.0;
         _predictionTime = null;
         _probabilities = null;
       });
 
-      // Jalankan klasifikasi dengan model ML
+      
       await _runClassification();
     } catch (e) {
       debugPrint("Error memilih gambar: $e");
@@ -279,7 +279,7 @@ class _CameraScreenState extends State<CameraScreen> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  // ignore: deprecated_member_use
+                  
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
@@ -348,7 +348,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  // Widget untuk menampilkan probabilitas per kelas
+  
   Widget _buildProbabilityBar(String label, double probability) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
@@ -689,7 +689,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                       ),
                                   ],
 
-                                  // Tampilkan probability bars jika ada data
+                                  
                                   if (_probabilities != null &&
                                       _probabilities!.isNotEmpty) ...[
                                     const SizedBox(height: 16),
