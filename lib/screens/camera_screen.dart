@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../services/classifier_service.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -36,12 +37,31 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
+  
+
   Future<void> _checkPermissions() async {
     final cameraStatus = await Permission.camera.status;
-    final galleryStatus = await Permission.photos.status;
+
+    
+    Permission storagePermission;
+    if (await _isAndroid13OrHigher()) {
+      storagePermission = Permission.photos;
+    } else {
+      storagePermission = Permission.storage;
+    }
+
+    final storageStatus = await storagePermission.status;
 
     debugPrint("Camera permission: $cameraStatus");
-    debugPrint("Gallery permission: $galleryStatus");
+    debugPrint("Storage/Gallery permission: $storageStatus");
+  }
+
+  Future<bool> _isAndroid13OrHigher() async {
+    if (Platform.isAndroid) {
+      var androidInfo = await DeviceInfoPlugin().androidInfo;
+      return androidInfo.version.sdkInt >= 33; 
+    }
+    return false;
   }
 
   Future<bool> _requestCameraPermission() async {
@@ -60,10 +80,19 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<bool> _requestGalleryPermission() async {
-    var status = await Permission.photos.status;
+    Permission permission;
+
+    
+    if (await _isAndroid13OrHigher()) {
+      permission = Permission.photos;
+    } else {
+      permission = Permission.storage;
+    }
+
+    var status = await permission.status;
 
     if (status.isDenied) {
-      status = await Permission.photos.request();
+      status = await permission.request();
     }
 
     if (status.isPermanentlyDenied) {
@@ -332,33 +361,21 @@ class _CameraScreenState extends State<CameraScreen> {
     final bottomButtonHeight = 65.0;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Deteksi Kopi",
+          style: TextStyle(
+            fontWeight: FontWeight.bold, 
+          ),
+        ),
+        backgroundColor: Colors.brown[800],
+        foregroundColor: Colors.white,
+      ),
       backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, color: Colors.brown[800]),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Deteksi Kopi",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.brown[800],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(width: 48),
-                ],
-              ),
-            ),
+            const SizedBox(height: 20),
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),

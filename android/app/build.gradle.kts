@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.klopi"
+    namespace = "com.example.detectcoffee"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973" // NDK fix
 
@@ -21,7 +21,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.klopi"
+        applicationId = "com.example.detectcoffee"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
