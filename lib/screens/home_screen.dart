@@ -17,9 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime? _lastPressedAt;
 
   static final List<MenuItem> menuItems = [
-    const MenuItem("Deteksi Kopi", Icons.camera_alt),
-    const MenuItem("Info Kopi", Icons.coffee_outlined),
-    const MenuItem("Tentang Aplikasi", Icons.info_outline),
+    const MenuItem("Detection", Icons.camera_alt),
+    const MenuItem("Information", Icons.coffee_outlined),
+    const MenuItem("About", Icons.info_outline),
   ];
 
   @override
@@ -79,17 +79,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
                         Text(
-                          "Selamat Datang di DetectCoffee!",
+                          "Welcome to DetectCoffee!",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                         SizedBox(height: 6),
                         Text(
-                          "Deteksi jenis profiling biji kopi dengan mudah.",
-                          style: TextStyle(fontSize: 15, color: Colors.white70),
+                          "Detect coffee bean profiling easily.",
+                          style: TextStyle(fontSize: 18, color: Colors.white70),
                         ),
                       ],
                     ),
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       icon: const Icon(Icons.play_arrow, color: Colors.white),
                       label: const Text(
-                        "Mulai Deteksi",
+                        "Start Detection",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

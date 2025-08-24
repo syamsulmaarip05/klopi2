@@ -29,7 +29,7 @@ class AboutScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header dengan logo aplikasi
+              
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
@@ -78,7 +78,7 @@ class AboutScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Versi 1.0.0',
+                      'Version 1.0.0',
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.white70,
@@ -88,113 +88,109 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
 
-              // Konten utama
+              
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Deskripsi Aplikasi
-                    _buildSectionTitle('Tentang Aplikasi'),
+                    
+                    _buildSectionTitle('About the Application'),
                     const SizedBox(height: 12),
                     _buildSectionContent(
-                      'DetectCoffee adalah aplikasi mobile berbasis AI yang dapat mengidentifikasi dan mengklasifikasikan jenis biji kopi menggunakan teknologi deep learning. Aplikasi ini menggunakan model Convolutional Neural Network (CNN) berbasis EfficientNet yang telah dikonversi ke TensorFlow Lite untuk inference yang cepat dan efisien pada perangkat mobile.',
+                      'DetectCoffee is an AI-based mobile application that can identify and classify types of coffee beans using deep learning technology. This application uses a Convolutional Neural Network (CNN) model based on EfficientNet that has been converted to TensorFlow Lite for fast and efficient inference on mobile devices.',
                     ),
 
                     const SizedBox(height: 24),
 
-                    // Teknologi AI
-                    _buildSectionTitle('Teknologi AI yang Digunakan'),
+                    
+                    _buildSectionTitle('AI Technology Used'),
                     const SizedBox(height: 12),
                     _buildSectionContent(
-                      'Model menggunakan arsitektur EfficientNet yang telah dilatih dengan dataset khusus biji kopi. Model asli dalam format H5 kemudian dikonversi ke TensorFlow Lite dengan optimasi quantization untuk mengurangi ukuran model hingga 75% tanpa mengurangi akurasi secara signifikan.',
+                      'The model uses the EfficientNet architecture that has been trained with a special coffee bean dataset. The original model in H5 format was then converted to TensorFlow Lite with quantization optimization to reduce the model size by up to 75% without significantly compromising accuracy.',
                     ),
 
                     const SizedBox(height: 24),
 
-                    // Fitur Utama
-                    _buildSectionTitle('Fitur Utama'),
+                    
+                    _buildSectionTitle('Main Features'),
                     const SizedBox(height: 12),
-                    _buildFeatureItem(Icons.camera_alt, 'Deteksi Real-time',
-                        'Ambil foto biji kopi dengan kamera atau pilih dari galeri'),
-                    _buildFeatureItem(Icons.analytics, 'Klasifikasi AI',
-                        'Identifikasi jenis biji kopi: Dark, Green, Light, dan Medium'),
-                    _buildFeatureItem(Icons.speed, 'Hasil Cepat',
-                        'Prediksi hasil dalam hitungan detik'),
-                    _buildFeatureItem(Icons.info, 'Informasi Lengkap',
-                        'Panduan lengkap tentang kualitas dan klasifikasi biji kopi'),
+                    _buildFeatureItem(Icons.camera_alt, 'Real-time Detection',
+                        'Take a photo of the coffee bean with the camera or select from the gallery'),
+                    _buildFeatureItem(Icons.analytics, 'AI Classification',
+                        'Identify coffee bean types: Dark, Green, Light, and Medium'),
+                    _buildFeatureItem(Icons.speed, 'Fast Results',
+                        'Predictions in seconds'),
+                    _buildFeatureItem(Icons.info, 'Comprehensive Information',
+                        'Complete guide to coffee bean quality and classification'),
 
                     const SizedBox(height: 24),
 
-                    // Spesifikasi Software
-                    _buildSectionTitle('Spesifikasi Software'),
+                    
+                    _buildSectionTitle('Software Specifications'),
                     const SizedBox(height: 12),
                     _buildSpecItem('Platform', 'Flutter (Cross-platform)'),
                     _buildSpecItem('Machine Learning', 'TensorFlow Lite'),
                     _buildSpecItem('Base Model', 'EfficientNet (Pre-trained)'),
-                    _buildSpecItem('Model Format',
-                        'TFLite dengan Post-training Quantization'),
+                    _buildSpecItem('Model Format', 'TFLite with Post-training Quantization'),
                     _buildSpecItem('Input Resolution', '224 x 224 pixels'),
-                    _buildSpecItem('Bahasa Pemrograman', 'Dart'),
+                    _buildSpecItem('Programming Language', 'Dart'),
                     _buildSpecItem('Image Processing', 'Flutter Image Picker'),
-                    _buildSpecItem(
-                        'Preprocessing', 'EfficientNet Preprocessing Function'),
+                    _buildSpecItem('Preprocessing', 'EfficientNet Preprocessing Function'),
                     _buildSpecItem('Permissions', 'Camera & Gallery Access'),
 
                     const SizedBox(height: 24),
 
-                    // Spesifikasi Hardware
-                    _buildSectionTitle('Kebutuhan Hardware'),
+                    
+                    _buildSectionTitle('Hardware Requirements'),
                     const SizedBox(height: 12),
                     _buildSpecItem(
-                        'OS Android', 'Android 5.0 (API Level 21) ke atas'),
-                    _buildSpecItem('OS iOS', 'iOS 9.0 ke atas'),
-                    _buildSpecItem('RAM', 'Minimal 2 GB (Rekomendasi 4 GB)'),
-                    _buildSpecItem('Storage', 'Minimal 100 MB ruang kosong'),
-                    _buildSpecItem(
-                        'Kamera', 'Kamera belakang dengan autofocus'),
-                    _buildSpecItem('Processor', 'ARM64 atau x86_64'),
+                        'OS Android', 'Android 5.0 (API Level 21) upwards'),
+                    _buildSpecItem('OS iOS', 'iOS 9.0 upwards'),
+                    _buildSpecItem('RAM', 'Minimum 2 GB (Recommended 4 GB)'),
+                    _buildSpecItem('Storage', 'Minimum 100 MB free space'),
+                    _buildSpecItem('Camera', 'Rear camera'),
+                    _buildSpecItem('Processor', 'ARM64 or x86_64'),
 
                     const SizedBox(height: 24),
 
-                    // Cara Penggunaan
-                    _buildSectionTitle('Cara Penggunaan'),
+                    
+                    _buildSectionTitle('How to Use the Application'),
                     const SizedBox(height: 12),
-                    _buildStepItem(1, 'Buka aplikasi DetectCoffee'),
-                    _buildStepItem(2, 'Pilih menu "Deteksi Kopi"'),
-                    _buildStepItem(3, 'Tekan tombol "Ambil Foto Kopi"'),
+                    _buildStepItem(1, 'Open the DetectCoffee app'),
+                    _buildStepItem(2, 'Select "Coffee Detection" menu'),
+                    _buildStepItem(3, 'Press "Take Coffee Photo" button'),
                     _buildStepItem(
-                        4, 'Pilih sumber gambar (Kamera atau Galeri)'),
+                        4, 'Select image source (Camera or Gallery)'),
                     _buildStepItem(
-                        5, 'Ambil foto biji kopi dengan pencahayaan yang baik'),
-                    _buildStepItem(6, 'Tunggu hasil prediksi muncul'),
+                        5, 'Take a photo of the coffee bean with good lighting'),
+                    _buildStepItem(6, 'Wait for the prediction results to appear'),
                     _buildStepItem(7,
-                        'Lihat hasil klasifikasi jenis biji kopi yang terdeteksi'),
+                        'View the classification results of the detected coffee bean'),
 
                     const SizedBox(height: 24),
 
-                    // Tips Penggunaan
-                    _buildSectionTitle('Tips untuk Hasil Optimal'),
+                    
+                    _buildSectionTitle('Tips for Optimal Results'),
                     const SizedBox(height: 12),
-                    _buildTipItem('Gunakan pencahayaan alami yang cukup'),
-                    _buildTipItem('Posisikan biji kopi di tengah frame'),
-                    _buildTipItem('Pastikan biji kopi dalam kondisi kering'),
-                    _buildTipItem('Gunakan background kontras (putih/netral)'),
-                    _buildTipItem('Hindari bayangan yang menutupi objek'),
-                    _buildTipItem('Ambil foto dari jarak 15-30 cm'),
+                    _buildTipItem('Use adequate natural lighting'),
+                    _buildTipItem('Position the coffee bean in the center of the frame'),
+                    _buildTipItem('Ensure the coffee bean is dry'),
+                    _buildTipItem('Use a contrasting background (white/neutral)'),
+                    _buildTipItem('Avoid shadows covering the object'),
+                    _buildTipItem('Take the photo from a distance of 15-30 cm'),
 
                     const SizedBox(height: 24),
 
-                    // Informasi Developer
-                    _buildSectionTitle('Informasi Pengembang'),
+                    _buildSectionTitle('Developer Information'),
                     const SizedBox(height: 12),
                     _buildSectionContent(
-                      'Aplikasi ini dikembangkan menggunakan teknologi terdepan dalam bidang computer vision dan machine learning untuk membantu para pecinta kopi, petani, pedagang, dan pelaku industri kopi dalam mengidentifikasi jenis biji kopi dengan akurasi tinggi. Model AI telah dilatih menggunakan dataset komprehensif dan dioptimasi untuk performa terbaik pada perangkat mobile.',
+                      'This application is developed using cutting-edge technology in the field of computer vision and machine learning to assist coffee lovers, farmers, traders, and industry players in identifying coffee bean types with high accuracy. The AI model has been trained using a comprehensive dataset and optimized for the best performance on mobile devices.',
                     ),
 
                     const SizedBox(height: 16),
 
-                    // Copyright
+                    
                     Center(
                       child: Container(
                         padding: const EdgeInsets.symmetric(

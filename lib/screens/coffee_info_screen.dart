@@ -29,7 +29,7 @@ class CoffeeInfoScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Gambar utama di bagian atas
+              
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(16),
@@ -39,7 +39,7 @@ class CoffeeInfoScreen extends StatelessWidget {
                   width: double.infinity,
                   color: Colors.brown[100],
                   child: Image.asset(
-                    'assets/images/info_coffee.png', // Gambar header utama
+                    'assets/images/info_coffee.png', 
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
                         color: Colors.brown[200],
@@ -70,15 +70,15 @@ class CoffeeInfoScreen extends StatelessWidget {
                 ),
               ),
               
-              // Konten dalam satu container
+              
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Bagian Kualitas Biji Kopi
+                    
                     Text(
-                      'Kualitas Biji Kopi',
+                      'Quality of Coffee Beans',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class CoffeeInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Kualitas biji kopi juga bisa diukur dari warna yang dimiliki. Biji kopi mentah yang memiliki titik-titik hitam atau coklat tua mungkin sudah mengalami kerusakan dan dapat menghasilkan kopi sangrai yang tidak berkualitas. Titik-titik tersebut bisa jadi adalah indikasi adanya jamur, yang dapat mengandung racun seperti aflatoksin. Warna biji kopi umumnya bervariasi dari hijau muda hingga hitam, yang dipengaruhi oleh tingkat kematangan saat panen, cara pengolahan, serta metode penyimpanan setelah dipanen. Biji kopi yang matang dengan baik biasanya berwarna merah atau hitam, sedangkan biji kopi yang tidak sepenuhnya matang akan berwarna hijau muda. Biji kopi hijau muda cenderung memiliki rasa yang kurang enak dibandingkan dengan biji kopi yang telah matang dengan sempurna.',
+                      'The quality of coffee beans can also be measured by their color. Raw coffee beans with black or dark brown spots may be damaged and could result in low-quality roasted coffee. These spots could be an indication of mold, which can contain toxins like aflatoxin. The color of coffee beans generally varies from light green to black, influenced by the level of ripeness at harvest, processing methods, and storage methods after harvesting. Well-ripened coffee beans are usually red or black, while beans that are not fully ripe will be light green. Light green coffee beans tend to have a less pleasant taste compared to beans that have ripened perfectly.',
                       style: TextStyle(
                         fontSize: 14,
                         height: 1.6,
@@ -98,7 +98,7 @@ class CoffeeInfoScreen extends StatelessWidget {
                     
                     const SizedBox(height: 24),
                     
-                    // Bagian Green Bean
+                    
                     Text(
                       'Green Bean',
                       style: TextStyle(
@@ -109,7 +109,7 @@ class CoffeeInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Kopi green bean merujuk pada biji kopi yang belum mengalami proses pemanggangan atau sangrai. Biji ini masih memiliki warna hijau dan terasa keras, berbeda dengan biji kopi yang telah disangrai yang berwarna cokelat dan mengeluarkan aroma yang kuat. Green bean merupakan bagian awal dari proses pengolahan biji kopi sebelum siap untuk diseduh.',
+                      'Green bean coffee refers to coffee beans that have not undergone the roasting process. These beans still have a green color and feel hard, unlike roasted coffee beans which are brown and have a strong aroma. Green beans are the initial stage of the coffee bean processing before they are ready to be brewed.',
                       style: TextStyle(
                         fontSize: 14,
                         height: 1.6,
@@ -120,9 +120,9 @@ class CoffeeInfoScreen extends StatelessWidget {
                     
                     const SizedBox(height: 24),
                     
-                    // Bagian Indikator Klasifikasi
+                    
                     Text(
-                      'Indikator Klasifikasi Green Bean',
+                      'Green Bean Classification Indicators',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -131,7 +131,7 @@ class CoffeeInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Klasifikasi dan penentuan grade green bean ditentukan oleh beberapa faktor, baik secara keseluruhan maupun sebagian, tergantung pada standar yang diterapkan di setiap negara.',
+                      'The classification and grading of green beans are determined by several factors, both overall and partially, depending on the standards applied in each country.',
                       style: TextStyle(
                         fontSize: 14,
                         height: 1.6,
@@ -142,30 +142,30 @@ class CoffeeInfoScreen extends StatelessWidget {
                     
                     const SizedBox(height: 20),
                     
-                    // Faktor-faktor dalam list
-                    _buildFactorItem('Altitude', 'Ketinggian lokasi tempat penanaman kopi berpengaruh besar terhadap kualitas biji kopi. Tinggi rendahnya tempat menentukan suhu, kelembapan, serta tekanan udara yang dapat mempengaruhi pertumbuhan dan perkembangan buah kopi.'),
                     
-                    _buildFactorItem('Region', 'Setiap daerah penghasil kopi memiliki ciri khas tersendiri terkait tanah, iklim, dan jenis kopi yang ada, sehingga lokasi menjadi faktor penting dalam menentukan profil rasa dari sebuah kopi.'),
-                    
-                    _buildFactorItem('Varietas', 'Ada banyak jenis kopi, seperti Arabika, Robusta, dan berbagai jenis hibrida yang berbeda dalam hal cita rasa, kekuatan, serta keunikan yang memengaruhi kualitas akhir kopi.'),
-                    
-                    _buildFactorItem('Pengolahan Biji Kopi', 'Metode pengolahan kopi, seperti pengolahan basah, kering, dan semi-basah, berpengaruh pada profil rasa dan karakteristik dari biji kopi.'),
-                    
-                    _buildFactorItem('Ukuran Biji Kopi', 'Dimensi fisik biji kopi dapat memberikan informasi mengenai kualitas dan potensi rasa yang muncul saat biji tersebut dipanggang.'),
-                    
-                    _buildFactorItem('Bentuk Biji dan Warna', 'Bentuk serta warna biji kopi juga dapat berfungsi sebagai indikator kualitas; beberapa di antaranya bisa mencerminkan tingkat kematangan dan pengolahan biji kopi.'),
-                    
-                    _buildFactorItem('Jumlah Biji Kopi Yang Cacat dan Cacat Biji Kopi Yang Ditoleransi', 'Faktor ini dapat mencerminkan proses panen, pemrosesan, dan pemilahan biji kopi.'),
-                    
-                    _buildFactorItem('Densitas Biji Kopi', 'Densitas biji kopi mengacu pada ukuran berat jenis biji tersebut. Biji yang lebih padat mungkin memiliki karakteristik rasa yang berbeda.'),
-                    
-                    _buildFactorItem('Kualitas Cupping', 'Nilai cupping berkaitan dengan keseluruhan profil rasa kopi, termasuk tingkat keasaman, kepedasan, keharuman, serta pengalaman umum saat meneguk kopi tersebut.'),
+                    _buildFactorItem('Altitude', 'The altitude of the coffee planting location significantly impacts the quality of the coffee beans. The height of the location determines the temperature, humidity, and air pressure, which can affect the growth and development of the coffee fruit.'),
+
+                    _buildFactorItem('Region', 'Each coffee-producing region has its own characteristics related to soil, climate, and the types of coffee present, making location an important factor in determining the flavor profile of a coffee.'),
+
+                    _buildFactorItem('Varietas', 'There are many types of coffee, such as Arabica, Robusta, and various hybrid types that differ in flavor, strength, and uniqueness, affecting the final quality of the coffee.'),
+
+                    _buildFactorItem('Coffee Bean Processing', 'The processing methods of coffee, such as wet, dry, and semi-washed processing, influence the flavor profile and characteristics of the coffee beans.'),
+
+                    _buildFactorItem('Coffee Bean Size', 'The physical dimensions of coffee beans can provide information about the quality and potential flavor that emerges during roasting.'),
+
+                    _buildFactorItem('Coffee Bean Shape and Color', 'The shape and color of coffee beans can also serve as quality indicators; some of them may reflect the level of ripeness and processing of the coffee beans.'),
+
+                    _buildFactorItem('Number of Defective Coffee Beans and Tolerated Defects', 'This factor can reflect the harvesting, processing, and sorting of coffee beans.'),
+
+                    _buildFactorItem('Coffee Bean Density', 'Coffee bean density refers to the specific weight of the bean. Denser beans may have different flavor characteristics.'),
+
+                    _buildFactorItem('Cupping Quality', 'Cupping scores relate to the overall flavor profile of the coffee, including acidity, bitterness, aroma, and the general experience of sipping the coffee.'),
                     
                     const SizedBox(height: 24),
                     
-                    // Bagian Sistem Penilaian
+                    
                     Text(
-                      'Sistem Penilaian Grade',
+                      'Grade Assessment System',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class CoffeeInfoScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Dari berbagai pertimbangan ini, tidak semua faktor digunakan, bergantung pada proses yang ada di tiap negara. Beberapa sistem penilaian grade dan klasifikasi green bean juga berkembang untuk memenuhi standar kualitas dari pembeli green bean. Jika terdapat kecacatan pada green bean yang dapat meningkatkan risiko kontaminasi, sistem penilaian akan menyesuaikan kecacatan tersebut.',
+                      'From various considerations, not all factors are used, depending on the processes in each country. Several grading and classification systems for green beans have also developed to meet the quality standards of green bean buyers. If there are defects in the green beans that may increase the risk of contamination, the grading system will adjust for those defects.',
                       style: TextStyle(
                         fontSize: 14,
                         height: 1.6,

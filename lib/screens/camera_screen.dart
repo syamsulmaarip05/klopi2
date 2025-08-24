@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../services/classifier_service.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -20,6 +19,11 @@ class _CameraScreenState extends State<CameraScreen> {
   final ClassifierService _classifier = ClassifierService();
 
   String? _selectedClass;
+  // ignore: unused_field
+  double _confidence = 0.0;
+  // ignore: unused_field
+  double? _predictionTime;
+  Map<String, double>? _probabilities;
 
   @override
   void initState() {
@@ -37,31 +41,12 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  
-
   Future<void> _checkPermissions() async {
     final cameraStatus = await Permission.camera.status;
-
-    
-    Permission storagePermission;
-    if (await _isAndroid13OrHigher()) {
-      storagePermission = Permission.photos;
-    } else {
-      storagePermission = Permission.storage;
-    }
-
-    final storageStatus = await storagePermission.status;
+    final galleryStatus = await Permission.photos.status;
 
     debugPrint("Camera permission: $cameraStatus");
-    debugPrint("Storage/Gallery permission: $storageStatus");
-  }
-
-  Future<bool> _isAndroid13OrHigher() async {
-    if (Platform.isAndroid) {
-      var androidInfo = await DeviceInfoPlugin().androidInfo;
-      return androidInfo.version.sdkInt >= 33; 
-    }
-    return false;
+    debugPrint("Gallery permission: $galleryStatus");
   }
 
   Future<bool> _requestCameraPermission() async {
@@ -80,19 +65,10 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<bool> _requestGalleryPermission() async {
-    Permission permission;
-
-    
-    if (await _isAndroid13OrHigher()) {
-      permission = Permission.photos;
-    } else {
-      permission = Permission.storage;
-    }
-
-    var status = await permission.status;
+    var status = await Permission.photos.status;
 
     if (status.isDenied) {
-      status = await permission.request();
+      status = await Permission.photos.request();
     }
 
     if (status.isPermanentlyDenied) {
@@ -141,6 +117,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
       setState(() {
         _selectedClass = result['predictedClass'];
+        _confidence = result['confidence'];
+        _predictionTime = result['predictionTime'];
+        _probabilities = result['probabilities'];
       });
     } catch (e) {
       debugPrint("Error saat klasifikasi: $e");
@@ -173,6 +152,9 @@ class _CameraScreenState extends State<CameraScreen> {
       setState(() {
         _image = File(pickedFile.path);
         _selectedClass = null;
+        _confidence = 0.0;
+        _predictionTime = null;
+        _probabilities = null;
       });
 
       await _runClassification();
@@ -205,6 +187,9 @@ class _CameraScreenState extends State<CameraScreen> {
       setState(() {
         _image = File(pickedFile.path);
         _selectedClass = null;
+        _confidence = 0.0;
+        _predictionTime = null;
+        _probabilities = null;
       });
 
       await _runClassification();
@@ -321,8 +306,8 @@ class _CameraScreenState extends State<CameraScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: isSelected
-                ? Border.all(color: Colors.green, width: 3)
-                : Border.all(color: Colors.transparent, width: 3),
+                ? Border.all(color: Colors.brown[700]!, width: 2)
+                : null,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -332,7 +317,7 @@ class _CameraScreenState extends State<CameraScreen> {
             ],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(isSelected ? 7 : 10),
+            borderRadius: BorderRadius.circular(isSelected ? 8 : 10),
             child: Image.asset(
               imagePath,
               fit: BoxFit.cover,
@@ -345,10 +330,69 @@ class _CameraScreenState extends State<CameraScreen> {
           style: TextStyle(
             fontSize: 12,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-            color: isSelected ? Colors.green : Colors.brown[700],
+            color: isSelected ? Colors.brown[800] : Colors.brown[700],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildProbabilityBar(String label, double probability) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.brown[700],
+                ),
+              ),
+              Text(
+                '${(probability * 100).toStringAsFixed(1)}%',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.brown[800],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Stack(
+            children: [
+              Container(
+                height: 6,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.brown.shade100,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+              FractionallySizedBox(
+                widthFactor: probability,
+                child: Container(
+                  height: 6,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.brown.shade400, Colors.brown.shade700],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -361,11 +405,11 @@ class _CameraScreenState extends State<CameraScreen> {
     final bottomButtonHeight = 65.0;
 
     return Scaffold(
-      appBar: AppBar(
+    appBar: AppBar(
         title: const Text(
-          "Deteksi Kopi",
+          "Coffee Bean Detection",
           style: TextStyle(
-            fontWeight: FontWeight.bold, 
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.brown[800],
@@ -375,7 +419,7 @@ class _CameraScreenState extends State<CameraScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+          const SizedBox(height: 15),
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -410,7 +454,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                       color: Colors.brown[700], size: 16),
                                   const SizedBox(width: 6),
                                   Text(
-                                    "Foto Kopi",
+                                    "Coffee bean photo",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -508,7 +552,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                   ),
                                   const SizedBox(width: 6),
                                   Text(
-                                    "Jenis Biji Kopi",
+                                    "Types of Coffee Beans",
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
@@ -568,7 +612,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 ),
                                 const SizedBox(width: 6),
                                 Text(
-                                  "Hasil Klasifikasi",
+                                  "Classification Results",
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -586,14 +630,39 @@ class _CameraScreenState extends State<CameraScreen> {
                                 color: Colors.white.withOpacity(0.9),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Text(
-                                _selectedClass ?? "Belum Terdeteksi",
-                                style: TextStyle(
-                                  color: Colors.brown[800],
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    _selectedClass ?? "Not Yet Detected",
+                                    style: TextStyle(
+                                      color: Colors.brown[800],
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  
+                                  if (_probabilities != null &&
+                                      _probabilities!.isNotEmpty) ...[
+                                    const SizedBox(height: 16),
+                                    const Divider(
+                                        height: 1, color: Colors.brown),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "Probability of Each Class",
+                                      style: TextStyle(
+                                        color: Colors.brown[700],
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    ..._probabilities!.entries
+                                        .map((entry) => _buildProbabilityBar(
+                                            entry.key, entry.value))
+                                        .toList(),
+                                  ],
+                                ],
                               ),
                             ),
                           ],
@@ -639,7 +708,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                     const SizedBox(width: 8),
                     const Text(
-                      "Ambil Foto Kopi",
+                      "Take a photo of coffee",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
