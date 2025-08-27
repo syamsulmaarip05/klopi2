@@ -23,7 +23,7 @@ class _CameraScreenState extends State<CameraScreen> {
   double _confidence = 0.0;
   // ignore: unused_field
   double? _predictionTime;
-  Map<String, double>? _probabilities;
+  Map<String, double>? _probabilitiesSorted;
 
   @override
   void initState() {
@@ -119,7 +119,7 @@ class _CameraScreenState extends State<CameraScreen> {
         _selectedClass = result['predictedClass'];
         _confidence = result['confidence'];
         _predictionTime = result['predictionTime'];
-        _probabilities = result['probabilities'];
+        _probabilitiesSorted = result['probabilitiesSorted'];
       });
     } catch (e) {
       debugPrint("Error saat klasifikasi: $e");
@@ -154,7 +154,7 @@ class _CameraScreenState extends State<CameraScreen> {
         _selectedClass = null;
         _confidence = 0.0;
         _predictionTime = null;
-        _probabilities = null;
+        _probabilitiesSorted = null;
       });
 
       await _runClassification();
@@ -189,7 +189,7 @@ class _CameraScreenState extends State<CameraScreen> {
         _selectedClass = null;
         _confidence = 0.0;
         _predictionTime = null;
-        _probabilities = null;
+        _probabilitiesSorted = null;
       });
 
       await _runClassification();
@@ -642,11 +642,10 @@ class _CameraScreenState extends State<CameraScreen> {
                                     textAlign: TextAlign.center,
                                   ),
                                   
-                                  if (_probabilities != null &&
-                                      _probabilities!.isNotEmpty) ...[
+                                  if (_probabilitiesSorted != null &&
+                                  _probabilitiesSorted!.isNotEmpty) ...[
                                     const SizedBox(height: 16),
-                                    const Divider(
-                                        height: 1, color: Colors.brown),
+                                    const Divider(height: 1, color: Colors.brown),
                                     const SizedBox(height: 10),
                                     Text(
                                       "Probability of Each Class",
@@ -654,12 +653,11 @@ class _CameraScreenState extends State<CameraScreen> {
                                         color: Colors.brown[700],
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    ..._probabilities!.entries
-                                        .map((entry) => _buildProbabilityBar(
-                                            entry.key, entry.value))
+                                        ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        ..._probabilitiesSorted!.entries
+                                        .map((e) => _buildProbabilityBar(e.key, e.value.clamp(0.0, 1.0)))
                                         .toList(),
                                   ],
                                 ],

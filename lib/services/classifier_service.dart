@@ -109,31 +109,37 @@ class ClassifierService {
       final results = outputTensor[0] as List<double>;
 
       
-      final double maxValue =
-          results.reduce((curr, next) => curr > next ? curr : next);
-      final int bestIndex = results.indexWhere((val) => val == maxValue);
+      final sortedEntries = List.generate(
+        _labels.length,
+        (i) => MapEntry(_labels[i], results[i]),
+      )..sort((a, b) => b.value.compareTo(a.value));
 
-      
-      final String predictedClass = bestIndex >= 0 && bestIndex < _labels.length
-          ? _labels[bestIndex]
-          : "Unknown";
+
+      final Map<String, double> probabilitiesSorted =
+          Map<String, double>.fromEntries(sortedEntries);
+
+
+      final double maxValue = sortedEntries.first.value;
+      final String predictedClass = sortedEntries.first.key;
       final double confidence = maxValue;
 
-      
+
       final Map<String, double> probabilities =
-          Map.fromIterables(_labels, results);
+          Map<String, double>.fromIterables(_labels, results);
+
 
       debugPrint('📊 PREDICTION RESULTS:');
       debugPrint('Predicted Class: $predictedClass');
       debugPrint('Confidence: ${confidence.toStringAsFixed(4)}');
       debugPrint('Prediction Time: $predictionTime ms');
-      debugPrint('All Probabilities: $probabilities');
+      debugPrint('All Probabilities (sorted): $probabilitiesSorted');
 
       return {
         'predictedClass': predictedClass,
         'confidence': confidence,
         'predictionTime': predictionTime / 1000.0, 
         'probabilities': probabilities,
+        'probabilitiesSorted' : probabilitiesSorted,
       };
     } catch (e) {
       debugPrint('❌ Error during prediction: $e');

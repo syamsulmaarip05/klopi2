@@ -46,10 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Row(
                     children: [
-                      Image.asset(
-                        'assets/images/icon.png',
-                        width: 48,
-                        height: 48,
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(12),
+                        child: 
+                        Image.asset(
+                          'assets/images/icon.png',
+                          width: 48,
+                          height: 48,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Text(
