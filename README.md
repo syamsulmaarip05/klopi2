@@ -58,7 +58,26 @@
         ├── flutter
         └── runner
 ```
-## Clone Repository
+## Instalasi dan Menjalakan Aplikasi
+
+**1. Clone Repositori**
 ```sh
 git clone https://github.com/syamsulmaarip05/klopi2/
 ```
+**2. Masuk Ke Folder**
+```sh
+cd klopi
+```
+**3. Instal Dependensi**
+```sh
+flutter pub get
+```
+**4. Jalankan Aplikasi**
+```sh
+flutter run
+```
+Note:
+
+Jangan Lupa untuk menghubungkan kedalam perangkat mobile atau emulator saat akan menjalankan aplikasi.
+
+
